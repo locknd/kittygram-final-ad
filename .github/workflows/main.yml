@@ -68,17 +68,16 @@ jobs:
         cd frontend
         npm test -- --coverage
 
-# Job 3: Сборка Docker-образов и отправка на Docker Hub
+  # Job 3: Сборка Docker-образов и отправка на Docker Hub
   docker_build_push:
     name: Build and push Docker images to Docker Hub
     runs-on: ubuntu-latest
-    needs: test  # Запускать сборку и деплой после успешных тестов
+    needs: test
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Логин в Docker Hub
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
@@ -88,20 +87,19 @@ jobs:
     # Сборка и отправка Docker-образов
     - name: Build and push backend Docker image
       run: |
-        docker build -t kleorii/kittygram_backend:latest -f backend/Dockerfile .
+        docker build -t kleorii/kittygram_backend:latest \
+          --build-arg REQUIREMENTS_PATH=backend/requirements.txt \
+          -f backend/Dockerfile .
+        docker push kleorii/kittygram_backend:latest
 
     - name: Build and push frontend Docker image
       run: |
         docker build -t kleorii/kittygram_frontend:latest -f frontend/Dockerfile .
+        docker push kleorii/kittygram_frontend:latest
 
     - name: Build and push gateway Docker image
       run: |
         docker build -t kleorii/kittygram_gateway:latest -f nginx/Dockerfile .
-    
-    - name: Push all images to Docker Hub
-      run: |
-        docker push kleorii/kittygram_backend:latest
-        docker push kleorii/kittygram_frontend:latest
         docker push kleorii/kittygram_gateway:latest
 
   # Job 4: Отправка уведомления в Telegram о завершении CI/CD
