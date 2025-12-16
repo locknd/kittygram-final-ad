@@ -47,7 +47,7 @@ jobs:
     - name: Install dependencies for backend
       run: |
         pip install -r backend/requirements.txt
-
+    #путь к тестам
     - name: Run backend tests
       run: |
         PYTHONPATH=backend pytest tests/ -v
