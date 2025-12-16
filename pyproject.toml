@@ -2,17 +2,13 @@
 line-length = 88
 target-version = "py311"
 
-[tool.ruff.linter]
 select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "B",  # flake8-bugbear
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings  
+    "F",   # Pyflakes
+    "I001", # isort
+    "B",   # flake8-bugbear
 ]
-
-[tool.ruff.format]
-quote-style = "double"
 
 exclude = [
     "tests/*",
