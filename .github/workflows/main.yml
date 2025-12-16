@@ -89,18 +89,18 @@ jobs:
     # Сборка и отправка Docker-образов
     - name: Build and push backend Docker image
       run: |
-        docker build -t username/kittygram_backend:latest -f backend/Dockerfile .
-        docker push username/kittygram_backend:latest
+        docker build -t kleorii/kittygram_backend:latest -f backend/Dockerfile .
+        docker push kleorii/kittygram_backend:latest
 
     - name: Build and push frontend Docker image
       run: |
-        docker build -t username/kittygram_frontend:latest -f frontend/Dockerfile .
-        docker push username/kittygram_frontend:latest
+        docker build -t kleorii/kittygram_backend:latest -f backend/Dockerfile .
+        docker push kleorii/kittygram_backend:latest
 
     - name: Build and push gateway Docker image
       run: |
-        docker build -t username/kittygram_gateway:latest -f nginx/Dockerfile .
-        docker push username/kittygram_gateway:latest
+        docker build -t kleorii/kittygram_backend:latest -f backend/Dockerfile .
+        docker push kleorii/kittygram_backend:latest
 
   # Job 4: Отправка уведомления в Telegram о завершении CI/CD
   notify_telegram:
