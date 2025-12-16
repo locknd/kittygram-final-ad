@@ -1,0 +1,13 @@
+name: Deploy Kittygram
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: PYTHONPATH=backend pytest tests/ -v

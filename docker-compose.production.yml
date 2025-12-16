@@ -1,0 +1,51 @@
+version: "3.8"
+
+volumes:
+  pg_data:
+  static:
+  media:
+
+services:
+  db:
+    image: postgres:13
+    container_name: db
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: unless-stopped  # Добавлено для продакшена
+
+  backend:
+    build: ./backend/
+    container_name: backend
+    env_file: .env
+    depends_on:
+      - db
+    volumes:
+      - static:/static
+      - media:/media
+    command: gunicorn kittygram_backend.wsgi:application --bind 0:8000
+    restart: unless-stopped  # Добавлено для продакшена
+
+  frontend:
+    build: ./frontend/
+    container_name: frontend
+    volumes:
+      - static:/static
+    environment:
+      - REACT_APP_API_URL=/kittygram/api
+    command: sh -c "mkdir -p /static/static && cp -r /app/build/. /static/static/ && tail -f /dev/null"
+    restart: unless-stopped  # Добавлено для продакшена
+
+  gateway:
+    build: ./nginx/
+    container_name: gateway
+    env_file: .env
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "80:80"  # Изменено с 9000:80 на 80:80 для продакшена
+    volumes:
+      - static:/static
+      - media:/media
+    restart: unless-stopped  # Добавлено для продакшена
