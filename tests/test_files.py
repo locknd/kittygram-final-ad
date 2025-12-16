@@ -71,7 +71,7 @@ def safely_load_yaml_file(path_to_file: Path) -> dict[str, Union[dict, str]]:
                 'корректный YAML-синтаксис. При попытке чтения файла возникло '
                 'исключение:\n'
                 f'{exc.__class__.__name__}: {exc}'
-            )
+            ) from exc
     return file_content
 
 

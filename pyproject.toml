@@ -10,6 +10,7 @@ select = [
     "I",   # isort
     "B",   # flake8-bugbear
 ]
+ignore = ["I001", "B904"]
 
 [tool.ruff.format]
 quote-style = "double"
