@@ -17,10 +17,11 @@ export const ButtonHeader = ({
       <p
         className={`text text_type_large text_color_white pl-8 ${styles.text} ${
           !text && styles.none
-        } ${isLogin && styles.hidden}`}
+        } ${isLogin ? styles.hidden : ''}`}
       >
         {text}
       </p>
     </NavLink>
   );
 };
+
