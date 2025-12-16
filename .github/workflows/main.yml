@@ -50,10 +50,9 @@ jobs:
 
     - name: Run backend tests
       run: |
-        cd backend
-        pytest
+        PYTHONPATH=backend pytest tests/ -v
 
-    # Фронтенд тесты
+    # Фронтенд тесты )
     - name: Set up Node.js for frontend
       uses: actions/setup-node@v2
       with:
