@@ -1,3 +1,5 @@
-service: kittygram
-repo_url: https://github.com/locknd/kittygram-final-ad.git
+dockerhub_username: kleorii  # замените на ваше имя пользователя на Docker Hub
+repo_owner: kleorii  # замените на ваше имя пользователя на GitHub
 branch: main
+repo_url: https://github.com/locknd/kittygram-final-ad.git
+service: kittygram
