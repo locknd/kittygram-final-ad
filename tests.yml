@@ -1,5 +1,5 @@
 dockerhub_username: kleorii
-repo_owner: kleorii 
+repo_owner: locknd 
 branch: main
 repo_url: https://github.com/locknd/kittygram-final-ad.git
 service: kittygram
