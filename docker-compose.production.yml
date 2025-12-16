@@ -12,10 +12,9 @@ services:
     env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
-    restart: unless-stopped  # Добавлено для продакшена
 
   backend:
-    build: ./backend/
+    image: kleorii/kittygram-final-ad:backend  # Используйте ваш тег для образа backend
     container_name: backend
     env_file: .env
     depends_on:
@@ -24,28 +23,25 @@ services:
       - static:/static
       - media:/media
     command: gunicorn kittygram_backend.wsgi:application --bind 0:8000
-    restart: unless-stopped  # Добавлено для продакшена
 
   frontend:
-    build: ./frontend/
+    image: kleorii/kittygram-final-ad:frontend  # Используйте ваш тег для образа frontend
     container_name: frontend
     volumes:
       - static:/static
     environment:
       - REACT_APP_API_URL=/kittygram/api
     command: sh -c "mkdir -p /static/static && cp -r /app/build/. /static/static/ && tail -f /dev/null"
-    restart: unless-stopped  # Добавлено для продакшена
 
   gateway:
-    build: ./nginx/
+    image: kleorii/kittygram-final-ad:gateway  # Используйте ваш тег для образа gateway
     container_name: gateway
     env_file: .env
     depends_on:
       - backend
       - frontend
     ports:
-      - "80:80"  # Изменено с 9000:80 на 80:80 для продакшена
+      - "9000:80"
     volumes:
       - static:/static
       - media:/media
-    restart: unless-stopped  # Добавлено для продакшена
