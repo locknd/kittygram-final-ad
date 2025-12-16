@@ -97,7 +97,7 @@ export const SignIn = ({ extraClass = "" }) => {
           />
           <ButtonForm
             extraClass={styles.btn}
-            text="Войти"
+            text="вход"
             onClick={handleSubmit}
           />
           <p className="text text_type_small text_color_input mt-5 mb-5">или</p>

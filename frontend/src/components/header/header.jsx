@@ -41,7 +41,7 @@ export const Header = ({ setQueryPage, extraClass = "" }) => {
         <img className={styles.logo} src={logo} alt="Логотип." />
       </NavLink>
       {!user.id ? (
-        <ButtonHeader to="/kittygram/signin" text="Войти" icon={loginIcon} />
+        <ButtonHeader to="/kittygram/signin" text="вход" icon={loginIcon} />
       ) : (
         <div className={styles.btns_box}>
           <ButtonHeader
