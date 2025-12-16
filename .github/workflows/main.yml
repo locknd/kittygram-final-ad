@@ -26,10 +26,7 @@ jobs:
         pip install ruff
 
     - name: Run ruff linter
-      run: ruff backend/kittygram_backend/
-
-    - name: Run ruff linter
-      run: ruff backend/cats/
+      run: ruff check .
 
   # Job 2: Запуск тестов (фронтенд и бэкенд)
   test:
