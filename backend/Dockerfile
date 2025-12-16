@@ -9,12 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-ARG REQUIREMENTS_PATH
-
-COPY ${REQUIREMENTS_PATH} requirements.txt
+COPY backend/requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY backend /app/
 
 RUN mkdir -p /static /media
 

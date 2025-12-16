@@ -88,7 +88,6 @@ jobs:
     - name: Build and push backend Docker image
       run: |
         docker build -t kleorii/kittygram_backend:latest \
-          --build-arg REQUIREMENTS_PATH=backend/requirements.txt \
           -f backend/Dockerfile .
         docker push kleorii/kittygram_backend:latest
 
@@ -101,6 +100,7 @@ jobs:
       run: |
         docker build -t kleorii/kittygram_gateway:latest -f nginx/Dockerfile .
         docker push kleorii/kittygram_gateway:latest
+
 
   # Job 4: Отправка уведомления в Telegram о завершении CI/CD
   notify_telegram:
