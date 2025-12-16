@@ -1,3 +1,22 @@
 [tool.ruff]
 line-length = 88
-exclude = "tests/*"  # игнорировать папку с тестами
+target-version = "py311"
+
+[tool.ruff.linter]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+exclude = [
+    "tests/*",
+    "migrations/*",
+    "__pycache__/*",
+    "*.pyi"
+]
