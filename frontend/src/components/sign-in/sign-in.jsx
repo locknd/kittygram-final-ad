@@ -104,7 +104,7 @@ export const SignIn = ({ extraClass = "" }) => {
         </form>
         <div className={styles.footer}>
           <NavLink
-            to="/signup"
+            to="/kittygram/signup"
             className={`text text_type_medium-16 text_color_link ${styles.nav}`}
           >
             Ещё не зарегистрированы? Зарегистрируйтесь

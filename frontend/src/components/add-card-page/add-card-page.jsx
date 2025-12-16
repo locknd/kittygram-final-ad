@@ -15,6 +15,9 @@ import { ColorsBox } from "../ui/colors-box/colors-box";
 
 import styles from "./add-card-page.module.css";
 
+// Изменённая строка для добавления /kittygram в API URL
+const API_URL = (process.env.REACT_APP_API_URL || `${URL}/kittygram/api`).replace(/\/$/, "");
+
 export const AddCardPage = ({ extraClass = "" }) => {
   const [currentColor, setCurrentColor] = React.useState("#FFFFFF");
   const [currentFileName, setCurrentFileName] = React.useState("");
@@ -55,10 +58,10 @@ export const AddCardPage = ({ extraClass = "" }) => {
     photo
       ? getBase64(photo).then((data) => {
           card["image"] = data;
-          sendCard(card)
+          sendCard(card)  // API-запрос с добавлением /kittygram
             .then((res) => {
               if (res && res.id) {
-                history.push(`/cats/${res.id}`);
+                history.push(`/kittygram/cats/${res.id}`);  // Ссылка на кота с префиксом /kittygram
               }
             })
             .catch(handleResponse);
@@ -66,7 +69,7 @@ export const AddCardPage = ({ extraClass = "" }) => {
       : sendCard(card)
           .then((res) => {
             if (res && res.id) {
-              history.push(`/cats/${res.id}`);
+              history.push(`/kittygram/cats/${res.id}`);  // Ссылка на кота с префиксом /kittygram
             }
           })
           .catch(handleResponse);

@@ -23,7 +23,8 @@ export const MainCard = ({
 
   return (
     <article className={`${styles.content} ${extraClass}`}>
-      <Link className={styles.link} to={`/cats/${cardId}`}>
+      {/* Добавил /kittygram в ссылку */}
+      <Link className={styles.link} to={`/kittygram/cats/${cardId}`}>
         <img
           className={styles.img}
           src={img ?? defaultImg}

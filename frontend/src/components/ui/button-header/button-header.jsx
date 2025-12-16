@@ -7,7 +7,7 @@ export const ButtonHeader = ({
   isLogin = false,
   text = "",
   icon,
-  to = "/signin",
+  to = "/kittygram/signin",
   extraClass = "",
   ...rest
 }) => {

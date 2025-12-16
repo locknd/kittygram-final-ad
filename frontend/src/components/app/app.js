@@ -40,22 +40,22 @@ function App() {
           <Header setQueryPage={setQueryPage} />
           <main className={styles.content}>
             <Switch>
-              <ProtectedRoute exact path="/">
+              <ProtectedRoute exact path="/kittygram">
                 <MainPage queryPage={queryPage} setQueryPage={setQueryPage} />
               </ProtectedRoute>
-              <Route path="/signin">
+              <Route path="/kittygram/signin">
                 <SignIn />
               </Route>
-              <Route path="/signup">
+              <Route path="/kittygram/signup">
                 <SignUp />
               </Route>
-              <ProtectedRoute path="/cats/add">
+              <ProtectedRoute path="/kittygram/cats/add">
                 <AddCardPage />
               </ProtectedRoute>
-              <ProtectedRoute path="/cats/edit">
+              <ProtectedRoute path="/kittygram/cats/edit">
                 <EditCardPage data={currentCard} setData={setCurrentCard} />
               </ProtectedRoute>
-              <ProtectedRoute path="/cats/:id">
+              <ProtectedRoute path="/kittygram/cats/:id">
                 <CardPage data={currentCard} setData={setCurrentCard} />
               </ProtectedRoute>
             </Switch>

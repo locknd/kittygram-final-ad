@@ -94,7 +94,7 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
         updateCard(totalCard, card.id)
           .then((res) => {
             if (res && res.id) {
-              history.replace({ pathname: `/cats/${res.id}` });
+              history.replace({ pathname: `/kittygram/cats/${res.id}` });
             }
           })
           .catch(handleResponse);
@@ -103,7 +103,7 @@ export const EditCardPage = ({ data, setData, extraClass = "" }) => {
       updateCard(totalCard, card.id)
         .then((res) => {
           if (res && res.id) {
-            history.replace({ pathname: `/cats/${res.id}` });
+            history.replace({ pathname: `/kittygram/cats/${res.id}` });
           }
         })
         .catch(handleResponse);

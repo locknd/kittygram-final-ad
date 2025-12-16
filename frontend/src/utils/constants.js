@@ -1,4 +1,4 @@
-export const URL = "";
+export const URL = "/kittygram";
 
 export const colorsList = [
   "#FFE4C4",

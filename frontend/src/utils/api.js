@@ -1,15 +1,21 @@
 import { URL } from "./constants";
 
+const API_URL = (process.env.REACT_APP_API_URL || `${URL}/kittygram/api`).replace(/\/$/, "");
+
 const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
+  if (res.ok) return res.json();
   return res.json().then((err) => Promise.reject(err));
 };
+
 const headersWithContentType = { "Content-Type": "application/json" };
 
+const authHeaders = () => ({
+  "Content-Type": "application/json",
+  authorization: `Token ${localStorage.getItem("auth_token")}`,
+});
+
 export const registerUser = (username, password) => {
-  return fetch(`${URL}/api/users/`, {
+  return fetch(`${API_URL}/users/`, {
     method: "POST",
     headers: headersWithContentType,
     body: JSON.stringify({ username, password }),
@@ -17,7 +23,7 @@ export const registerUser = (username, password) => {
 };
 
 export const loginUser = (username, password) => {
-  return fetch(`${URL}/api/token/login/`, {
+  return fetch(`${API_URL}/token/login/`, {
     method: "POST",
     headers: headersWithContentType,
     body: JSON.stringify({ username, password }),
@@ -33,12 +39,9 @@ export const loginUser = (username, password) => {
 };
 
 export const logoutUser = () => {
-  return fetch(`${URL}/api/token/logout/`, {
+  return fetch(`${API_URL}/token/logout/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
   }).then((res) => {
     if (res.status === 204) {
       localStorage.removeItem("auth_token");
@@ -49,78 +52,55 @@ export const logoutUser = () => {
 };
 
 export const getUser = () => {
-  return fetch(`${URL}/api/users/me/`, {
+  return fetch(`${API_URL}/users/me/`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
   }).then(checkResponse);
 };
 
 export const getCards = (page = 1) => {
-  return fetch(`${URL}/api/cats/?page=${page}`, {
+  return fetch(`${API_URL}/cats/?page=${page}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
   }).then(checkResponse);
 };
 
 export const getCard = (id) => {
-  return fetch(`${URL}/api/cats/${id}/`, {
+  return fetch(`${API_URL}/cats/${id}/`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
   }).then(checkResponse);
 };
 
 export const getAchievements = () => {
-  return fetch(`${URL}/api/achievements/`, {
+  return fetch(`${API_URL}/achievements/`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
   }).then(checkResponse);
 };
 
 export const sendCard = (card) => {
-  return fetch(`${URL}/api/cats/`, {
+  return fetch(`${API_URL}/cats/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
     body: JSON.stringify(card),
   }).then(checkResponse);
 };
 
 export const updateCard = (card, id) => {
-  return fetch(`${URL}/api/cats/${id}/`, {
+  return fetch(`${API_URL}/cats/${id}/`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
     body: JSON.stringify(card),
   }).then(checkResponse);
 };
 
 export const deleteCard = (id) => {
-  return fetch(`${URL}/api/cats/${id}/`, {
+  return fetch(`${API_URL}/cats/${id}/`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Token ${localStorage.getItem("auth_token")}`,
-    },
+    headers: authHeaders(),
   }).then((res) => {
-    if (res.status === 204) {
-      return { status: true };
-    }
+    if (res.status === 204) return { status: true };
     return { status: false };
   });
 };

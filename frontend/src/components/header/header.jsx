@@ -31,21 +31,21 @@ export const Header = ({ setQueryPage, extraClass = "" }) => {
   };
 
   const headerClassList = `${styles.header} ${
-    (location.pathname === "/signin" || location.pathname === "/signup") &&
+    (location.pathname === "/kittygram/signin" || location.pathname === "/kittygram/signup") &&
     styles.hidden
   } ${extraClass}`;
 
   return (
     <header className={headerClassList}>
-      <NavLink className={styles.nav} to="/" onClick={onMainPage}>
+      <NavLink className={styles.nav} to="/kittygram" onClick={onMainPage}>
         <img className={styles.logo} src={logo} alt="Логотип." />
       </NavLink>
       {!user.id ? (
-        <ButtonHeader to="/signin" text="Войти" icon={loginIcon} />
+        <ButtonHeader to="/kittygram/signin" text="Войти" icon={loginIcon} />
       ) : (
         <div className={styles.btns_box}>
           <ButtonHeader
-            to="/cats/add"
+            to="/kittygram/cats/add"
             text="Добавить кота"
             icon={plusIcon}
             isLogin={true}

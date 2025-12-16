@@ -9,7 +9,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
         localStorage.getItem("auth_token") ? (
           children
         ) : (
-          <Redirect to="/signin" />
+          <Redirect to="/kittygram/signin" />
         )
       }
     />

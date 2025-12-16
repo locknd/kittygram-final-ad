@@ -1,27 +1,52 @@
-version: '3'
+version: "3.8"
 
 volumes:
   pg_data:
   static:
+  media:
 
 services:
   db:
     image: postgres:13
+    container_name: db
+    env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
+
   backend:
     build: ./backend/
+    container_name: backend
     env_file: .env
-  frontend:
-    env_file: .env
-    build: ./frontend/
-    command: cp -r /app/build/. /static/
+    depends_on:
+      - db
     volumes:
       - static:/static
+      - media:/media
+    command: gunicorn kittygram_backend.wsgi:application --bind 0:8000
+
+
+  frontend:
+    build: ./frontend/
+    container_name: frontend
+    volumes:
+      - static:/static
+    environment:
+      - REACT_APP_API_URL=/kittygram/api
+    command: sh -c "mkdir -p /static/static && cp -r /app/build/. /static/static/ && tail -f /dev/null"
+
+
+
+
+
   gateway:
     build: ./nginx/
+    container_name: gateway
     env_file: .env
+    depends_on:
+      - backend
+      - frontend
     ports:
-      - 9000:80
+      - "9000:80"
     volumes:
       - static:/static
+      - media:/media

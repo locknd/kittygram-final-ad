@@ -39,14 +39,14 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
 
   const handleReturn = () => {
     setData({});
-    history.push("/");
+    history.push("/kittygram");  // Изменено на /kittygram
   };
 
   const handleRemoveCard = () => {
     deleteCard(data.id)
       .then((res) => {
         if (res.status) {
-          history.replace({ pathname: "/" });
+          history.replace({ pathname: "/kittygram" });  // Изменено на /kittygram
         }
       })
       .catch((err) => {
@@ -76,7 +76,7 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
               <ButtonHeader
                 extraClass={`${styles.mobile_btn}`}
                 icon={editIcon}
-                to="/cats/edit"
+                to="/kittygram/cats/edit"  // Изменено на /kittygram
               />
               <ButtonSecondary
                 extraClass={styles.mobile_btn}
@@ -103,7 +103,7 @@ export const CardPage = ({ data, setData, extraClass = "" }) => {
             <ButtonHeader
               extraClass={`${styles.desktop_btn} ${styles.desk_edit}`}
               icon={editIcon}
-              to="/cats/edit"
+              to="/kittygram/cats/edit"  // Изменено на /kittygram
             />
             <ButtonSecondary
               extraClass={`${styles.desktop_btn} ${styles.desk_remove}`}
