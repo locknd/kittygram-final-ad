@@ -1,4 +1,4 @@
-export const URL = "/kittygram";
+export const API_URL = process.env.REACT_APP_API_URL || "/kittygram/api";
 
 export const colorsList = [
   "#FFE4C4",
