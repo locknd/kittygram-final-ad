@@ -14,4 +14,8 @@ COPY . .
 
 RUN mkdir -p /static /media
 
-CMD ["gunicorn", "kittygram_backend.wsgi:application", "--bind", "0:8000"]
+# entrypoint для миграций + collectstatic
+RUN printf '#!/bin/sh\nset -e\npython manage.py migrate --noinput\npython manage.py collectstatic --noinput\nexec gunicorn kittygram_backend.wsgi:application --bind 0:8000\n' > /app/entrypoint.sh \
+    && chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]
