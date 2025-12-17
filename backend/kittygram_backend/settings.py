@@ -12,10 +12,13 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '82.202.143.198',
+    'kittygram.82-202-143-198.nip.io',
+    'taski.82-202-143-198.nip.io',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://82.202.143.198',
+    'https://kittygram.82-202-143-198.nip.io',
+    'https://taski.82-202-143-198.nip.io',
 ]
 
 INSTALLED_APPS = [
