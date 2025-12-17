@@ -25,7 +25,7 @@ services:
     command: gunicorn kittygram_backend.wsgi:application --bind 0:8000
 
   frontend:
-    build: ./frontend
+    image: kleorii/kittygram_frontend:latest
     volumes:
       - static:/static
     command: sh -c "cp -r /app/build/* /static/ && tail -f /dev/null"
