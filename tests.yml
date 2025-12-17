@@ -1,4 +1,4 @@
 repo_owner: locknd
 dockerhub_username: kleorii
 taski_domain: http://158.160.88.19/taski
-kittygram_domain: http://158.160.88.19/kittygram
+kittygram_domain: http://localhost:9000/
