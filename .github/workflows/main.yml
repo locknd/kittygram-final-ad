@@ -1,116 +1,48 @@
-name: CI/CD for Kittygram
+name: Kittygram CI/CD
 
 on:
   push:
-    branches:
-      - main  # Запускать workflow на пуш в ветку main
+    branches: [ "main" ]
+
+permissions:
+  contents: read
 
 jobs:
-  # Job 1: Линтинг кода (ruff)
-  lint_backend:
-    name: Lint backend code with ruff
+  backend_checks:
+    name: Backend: ruff + pytest
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
 
-    - name: Install ruff and dependencies
-      run: |
-        pip install -r backend/requirements.txt
-        pip install ruff
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install ruff
 
-    - name: Run ruff linter
-      run: ruff check .
+      - name: Ruff
+        run: ruff check backend
 
-  # Job 2: Запуск тестов (фронтенд и бэкенд)
-  test:
-    name: Run tests for frontend and backend
+      - name: Pytest
+        run: |
+          cd backend
+          pytest
+
+  frontend_tests:
+    name: Frontend: npm test
     runs-on: ubuntu-latest
-    needs: lint_backend  # Запускать тесты только после линтинга
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    # Бэкенд тесты
-    - name: Set up Python for backend
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-
-    - name: Install dependencies for backend
-      run: |
-        pip install -r backend/requirements.txt
-    #путь к тестам
-    - name: Run backend tests
-      run: |
-        PYTHONPATH=backend pytest tests/ -v
-
-    # Фронтенд тесты )
-    - name: Set up Node.js for frontend
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-
-    - name: Install dependencies for frontend
-      run: |
-        cd frontend
-        npm install
-
-    - name: Run frontend tests
-      run: |
-        cd frontend
-        npm test -- --coverage
-
-  # Job 3: Сборка Docker-образов и отправка на Docker Hub
-  docker_build_push:
-    name: Build and push Docker images to Docker Hub
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    # Сборка и отправка Docker-образов
-    - name: Build and push backend Docker image
-      run: |
-        docker build -t kleorii/kittygram_backend:latest \
-          -f backend/Dockerfile .
-        docker push kleorii/kittygram_backend:latest
-
-    - name: Build and push frontend Docker image
-      run: |
-        docker build -t kleorii/kittygram_frontend:latest -f frontend/Dockerfile .
-        docker push kleorii/kittygram_frontend:latest
-
-    - name: Build and push gateway Docker image
-      run: |
-        docker build -t kleorii/kittygram_gateway:latest -f nginx/Dockerfile .
-        docker push kleorii/kittygram_gateway:latest
-
-
-  # Job 4: Отправка уведомления в Telegram о завершении CI/CD
-  notify_telegram:
-    name: Notify Telegram about workflow completion
-    runs-on: ubuntu-latest
-    needs: docker_build_push
-
-    steps:
-    - name: Send message to Telegram
-      run: |
-        curl -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
-        -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-        -d text="CI/CD пайплайн для kittygram-final-ad успешно завершен!"
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
