@@ -1,18 +1,17 @@
-# Используем официальный Node.js образ
-FROM node:18
+FROM node:18 AS build
 
-# Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
 
-# Копируем package.json и package-lock.json из папки frontend
-COPY frontend/package.json /app/package.json
-COPY frontend/package-lock.json /app/package-lock.json
-
-# Устанавливаем зависимости
+COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci
 
-# Копируем все остальные файлы из папки frontend
-COPY frontend /app/
+COPY frontend/ ./
+RUN npm run build
 
-# Запуск приложения
-CMD ["npx", "-y", "http-server", "-p", "8000", "/app/build"]
+FROM node:18
+
+WORKDIR /app
+
+COPY --from=build /app/build /app/build
+
+CMD ["sh", "-c", "cp -r /app/build/* /static/ && tail -f /dev/null"]
