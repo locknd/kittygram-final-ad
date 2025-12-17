@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   backend_checks:
-    name: Backend: ruff + pytest
+    name: Backend ruff + pytest
     runs-on: ubuntu-latest
 
     steps:
