@@ -50,7 +50,7 @@ export const SignIn = ({ extraClass = "" }) => {
             getUser().then((res) => {
               if (res && res.id) {
                 setUser({ id: res.id });
-                history.replace({ pathname: "/" });
+                history.replace({ pathname: "/kittygram" });
               }
             });
           }

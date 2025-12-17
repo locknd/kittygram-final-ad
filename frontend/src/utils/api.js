@@ -1,6 +1,4 @@
-import { URL } from "./constants";
-
-const API_URL = (process.env.REACT_APP_API_URL || `${URL}/kittygram/api`).replace(/\/$/, "");
+import { API_URL } from "./constants";
 
 const checkResponse = (res) => {
   if (res.ok) return res.json();

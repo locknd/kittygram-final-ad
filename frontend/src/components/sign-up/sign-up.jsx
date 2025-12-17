@@ -55,7 +55,7 @@ export const SignUp = ({ extraClass = "" }) => {
       registerUser(userData.username, userData.password)
         .then((res) => {
           if (res && res.username) {
-            history.replace({ pathname: "/signin" });
+            history.replace({ pathname: "/kittygram/signin" });
           }
         })
         .catch((err) => {
@@ -121,7 +121,7 @@ export const SignUp = ({ extraClass = "" }) => {
         </form>
         <div className={styles.footer}>
           <NavLink
-            to="/kittygram//signin"
+            to="/kittygram/signin"
             className={`text text_type_medium-16 text_color_link ${styles.nav}`}
           >
             Уже зарегистрированы? Войти
