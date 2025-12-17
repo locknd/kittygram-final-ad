@@ -25,13 +25,11 @@ services:
     command: gunicorn kittygram_backend.wsgi:application --bind 0:8000
 
   frontend:
-    image: kleorii/kittygram_frontend:latest  # Используйте ваш тег для образа frontend
-    container_name: frontend
+    build: ./frontend
     volumes:
       - static:/static
-    environment:
-      - REACT_APP_API_URL=/kittygram/api
-    command: sh -c "mkdir -p /static/static && cp -r /app/build/. /static/static/ && tail -f /dev/null"
+    command: sh -c "cp -r /app/build/* /static/ && tail -f /dev/null"
+
 
   gateway:
     image: kleorii/kittygram_gateway:latest # Используйте ваш тег для образа gateway
