@@ -14,7 +14,7 @@ services:
       - pg_data:/var/lib/postgresql/data
 
   backend:
-    image: kleorii/kittygram_backend:latest  # Используйте ваш тег для образа backend
+    image: kleorii/kittygram_backend:latest
     container_name: backend
     env_file: .env
     depends_on:
@@ -26,20 +26,21 @@ services:
 
   frontend:
     image: kleorii/kittygram_frontend:latest
+    container_name: frontend
     volumes:
       - static:/static
-    command: sh -c "cp -r /app/build/* /static/ && tail -f /dev/null"
-
+    command: sh -c "cp -r /app/build/. /static/ && tail -f /dev/null"
 
   gateway:
-    image: kleorii/kittygram_gateway:latest # Используйте ваш тег для образа gateway
+    image: kleorii/kittygram_gateway:latest
     container_name: gateway
-    env_file: .env
     depends_on:
       - backend
       - frontend
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - static:/static
       - media:/media
+      - ./ssl:/etc/nginx/ssl:ro
