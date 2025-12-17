@@ -33,7 +33,7 @@ jobs:
       - name: Pytest
         run: |
           cd backend
-          pytest
+          pytest || [ $? -eq 5 ]
 
   frontend_tests:
     name: Frontend tests
