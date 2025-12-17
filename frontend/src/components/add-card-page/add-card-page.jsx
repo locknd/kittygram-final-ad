@@ -16,7 +16,6 @@ import { ColorsBox } from "../ui/colors-box/colors-box";
 import styles from "./add-card-page.module.css";
 
 // Изменённая строка для добавления /kittygram в API URL
-const API_URL = (process.env.REACT_APP_API_URL || `${URL}/kittygram/api`).replace(/\/$/, "");
 
 export const AddCardPage = ({ extraClass = "" }) => {
   const [currentColor, setCurrentColor] = React.useState("#FFFFFF");
