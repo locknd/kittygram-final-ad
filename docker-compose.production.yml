@@ -43,4 +43,4 @@ services:
     volumes:
       - static:/static
       - media:/media
-      - ./ssl:/etc/nginx/ssl:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
