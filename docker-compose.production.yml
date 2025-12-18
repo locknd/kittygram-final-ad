@@ -61,6 +61,7 @@ services:
       - taski_db
     expose:
       - "8000"
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
 
   taski_frontend:
     image: kleorii/taski_frontend:latest
