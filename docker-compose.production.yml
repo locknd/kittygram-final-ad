@@ -4,6 +4,8 @@ volumes:
   pg_data:
   static:
   media:
+  taski_pg_data:
+  taski_static:
 
 services:
   db:
@@ -43,4 +45,24 @@ services:
     volumes:
       - static:/static
       - media:/media
+      - taski_static:/taski_static
       - /etc/letsencrypt:/etc/letsencrypt:ro
+
+  taski_db:
+    image: postgres:13
+    env_file: .env
+    volumes:
+      - taski_pg_data:/var/lib/postgresql/data
+
+  taski_backend:
+    image: kleorii/taski_backend:latest
+    env_file: .env
+    depends_on:
+      - taski_db
+    expose:
+      - "8000"
+
+  taski_frontend:
+    image: kleorii/taski_frontend:latest
+    volumes:
+      - taski_static:/taski_static
