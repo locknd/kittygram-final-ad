@@ -5,6 +5,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
+ENV PUBLIC_URL=/kittygram
 RUN npm run build
 
 FROM node:18
