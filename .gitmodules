@@ -1,0 +1,3 @@
+[submodule "taski-docker"]
+	path = taski-docker
+	url = https://github.com/locknd/taski-docker.git
